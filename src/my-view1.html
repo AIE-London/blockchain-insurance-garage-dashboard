@@ -13,7 +13,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="./components/basic-ui.html">
 <link rel="import" href="./components/login-screen.html">
 <link rel="import" href="./components/transaction-history.html">
-<link rel="import" href="behaviors/garage-api-behavior.html">
 <link rel="import" href="./components/claim-display.html">
 
 <dom-module id="my-view1">
@@ -22,7 +21,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
 
-        padding: 10px;
       }
     </style>
 
@@ -30,15 +28,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <template is="dom-if" if="[[_status]]">
       <h1>Welcome, here you are able to value Vehicles</h1>
       <transaction-history></transaction-history>
-
-
-
-      <paper-card>
-      <div class="card-actions">
-        <paper-button on-tap="_logOut">Log Out</paper-button>
-      </div>
-      </paper-card>
-      </template>
+    </template>
 
     <template is="dom-if" if="[[!_status]]">
       <login-screen></login-screen>
@@ -50,42 +40,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     /* global ReduxBehavior */
     Polymer({
         is: 'my-view1',
-        behaviors: [ReduxBehavior, GarageAPIBehavior],
-        actions: {
-            logOut: function() {
-                return {
-                    type: 'LOG_OUT',
-
-                };
-            },
-        },
-
+        behaviors: [ReduxBehavior],
         properties: {
-            count: {
-                type: Number,
-                statePath: 'count',
-            },
             _status: {
                 type: Boolean,
                 value: true,
                 statePath: 'loggedIn',
             },
         },
-        _loggedIn: function (status) {
-            return status;
-        },
-        _loggedOut: function (status) {
-            return status;
-        },
-        _increment: function() {
-            this.dispatch('increment');
-        },
-
-        ready: function () {
-        },
-        _logOut: function (){
-            this.dispatch('logOut');
-        }
     });
   </script>
 </dom-module>
