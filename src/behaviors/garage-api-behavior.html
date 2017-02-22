@@ -1,5 +1,5 @@
 <script>
-    var ClaimantAPIBehavior = {
+    var GarageAPIBehavior = {
         properties: {
             _endpoint: {
                 value: 'https://blockchain-insurance.eu-gb.mybluemix.net',
@@ -8,10 +8,31 @@
                 value: 'https://aston-wiremock.eu-gb.mybluemix.net',
             },
         },
-        _claimantApi: function (){
+        _garageApi: function (){
             let _endpoint = this._endpoint;
             let _mockEndpoint = this._mockEndpoint;
             return {
+                submitReport: function (token, notes, wrightOff, estimatedValue, claimID, username) {
+                    let headers = new Headers();
+                    headers.append("Content-Type", "application/json");
+                    return fetch(_endpoint + '/garage/'+username+'/report',{
+                        method: 'POST',
+                        headers: headers,
+                        body: JSON.stringify({
+                            claimId: "C3",
+                            estimatedCost: estimatedValue,
+                            notes: notes,
+                            writeOff: writeOff
+                        })
+                    }).then(function(response) {
+                        console.log(response);
+                        if (response.status && response.status !== 200) {
+                            throw new Error("Failed to login");
+                        }
+                        return response.headers.get('Token');
+                    });
+                },
+
                 login: function (username, password) {
                     let headers = new Headers();
                     headers.append("Content-Type", "application/json");

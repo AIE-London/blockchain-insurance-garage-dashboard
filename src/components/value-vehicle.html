@@ -29,11 +29,11 @@
 
                 <paper-dropdown-menu label="Write Off?">
                     <paper-listbox id = "listBox" class="dropdown-content" selected = "{{type}}">
-                    <template is="dom-repeat" items="{{typeOptions}}">
-                        <paper-item>{{item}}</paper-item>
-                    </template>
+                        <template is="dom-repeat" items="{{writeOffOptions}}">
+                            <paper-item>{{item}}</paper-item>
+                        </template>
 
-                </paper-listbox>
+                    </paper-listbox>
                 </paper-dropdown-menu>
 
 
@@ -61,10 +61,18 @@
                     type: String,
                     statePath: 'token',
                 },
-                typeOptions: {
+                writeOffOptions: {
                     type: Array,
                     value: ['Yes',
                         'No']
+                },
+                username: {
+                    type: String,
+                    statePath: 'username',
+                },
+                claimId: {
+                    type: String,
+
                 }
             },
 
@@ -74,7 +82,7 @@
 
 
             _valueVehicle: function() {
-                this._claim().createClaim(this.token,"P1",this.notes, this.typeOptions[this.type], this.value).then(function (token) {
+                this._claim().submitReport(this.token,this.claimId,this.notes, this.type === this.writeOffOptions.indexOf("Yes"), this.value, this.username).then(function (token) {
                     console.log(token);
                 }, function (error) {
                     console.error(error);

@@ -5,7 +5,7 @@
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/iron-a11y-keys/iron-a11y-keys.html">
 
-<link rel="import" href="../behaviors/claimant-api-behavior.html">
+<link rel="import" href="../behaviors/garage-api-behavior.html">
 
 <dom-module id="login-screen">
     <template>
@@ -39,7 +39,7 @@
         /* global ReduxBehavior */
         Polymer({
             is: 'login-screen',
-            behaviors: [ReduxBehavior, ClaimantAPIBehavior],
+            behaviors: [ReduxBehavior, GarageAPIBehavior],
             actions: {
                 addToken: function(token) {
                     return {
@@ -70,7 +70,7 @@
             },
             _logIn: function (){
                 var _this = this
-                this._claimantApi().login(this.username, this.password).then(function (token) {
+                this._garageApi().login(this.username, this.password).then(function (token) {
                    _this.dispatch('addToken',token);
                 }, function (error) {
                    console.error(error);

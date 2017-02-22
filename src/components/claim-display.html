@@ -3,7 +3,7 @@
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
-<link rel="import" href="../behaviors/claimant-api-behavior.html">
+<link rel="import" href="../behaviors/garage-api-behavior.html">
 <link rel="import" href="status-bar.html">
 
 <dom-module id="claim-display">
@@ -38,7 +38,7 @@
         /* global ReduxBehavior */
         Polymer({
             is: 'claim-display',
-            behaviors: [ReduxBehavior,ClaimantAPIBehavior],
+            behaviors: [ReduxBehavior,GarageAPIBehavior],
             actions: {
                 addClaim: function(claimId, claimData) {
                     return {

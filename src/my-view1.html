@@ -13,7 +13,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="./components/basic-ui.html">
 <link rel="import" href="./components/login-screen.html">
 <link rel="import" href="./components/transaction-history.html">
-<link rel="import" href="./behaviors/claimant-api-behavior.html">
+<link rel="import" href="behaviors/garage-api-behavior.html">
 <link rel="import" href="./components/claim-display.html">
 
 <dom-module id="my-view1">
@@ -50,7 +50,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     /* global ReduxBehavior */
     Polymer({
         is: 'my-view1',
-        behaviors: [ReduxBehavior, ClaimantAPIBehavior],
+        behaviors: [ReduxBehavior, GarageAPIBehavior],
         actions: {
             logOut: function() {
                 return {
