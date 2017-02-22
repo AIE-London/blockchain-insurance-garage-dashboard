@@ -15,30 +15,30 @@ var offline = {
             var objectStore = transaction.objectStore('offline-cache');
             var request = objectStore.get(storekey);
             request.onerror = function(event) {
-                console.log('ClaimantDB: error reading from database, ' + request.error.name);
+                console.log('garageDB: error reading from database, ' + request.error.name);
                 callback(null);
             };
             request.onsuccess = function(event) {
                 if (!request.result) {
-                    console.log('ClaimantDB: no saved ' + storekey);
+                    console.log('garageDB: no saved ' + storekey);
                     callback(null);
                 }
                 else {
-                    console.log("ClaimantDB: restoring state");
+                    console.log("garageDB: restoring state");
                     callback(request.result);
                 }
             };
         }
         else if (!window.offlineIndexedDB) {
-            console.log('ClaimantDB: browser does not support indexedDB');
+            console.log('garageDB: browser does not support indexedDB');
         }
         else {
-            var request = window.offlineIndexedDB.open('claimant-dashboard-offline');
+            var request = window.offlineIndexedDB.open('garage-dashboard-offline');
             request.onerror = function (event) {
-                console.log('ClaimantDB: error opening database, ' + request.error.name);
+                console.log('garageDB: error opening database, ' + request.error.name);
             };
             request.onupgradeneeded = function (event) {
-                console.log("ClaimantDB: creating obj store");
+                console.log("garageDB: creating obj store");
                 event.target.result.createObjectStore('offline-cache');
             };
             request.onsuccess = function (event) {
@@ -47,16 +47,16 @@ var offline = {
                 var objectStore = transaction.objectStore('offline-cache');
                 var request = objectStore.get(storekey);
                 request.onerror = function(event) {
-                    console.log('ClaimantDB: error reading from database, ' + request.error.name);
+                    console.log('garageDB: error reading from database, ' + request.error.name);
                     callback(null);
                 };
                 request.onsuccess = function(event) {
                     if (!request.result) {
-                        console.log('ClaimantDB: no saved ' + storekey);
+                        console.log('garageDB: no saved ' + storekey);
                     }
                     else {
                         //REDUX ME
-                        console.log("ClaimantDB: restoring state");
+                        console.log("garageDB: restoring state");
                         callback(request.result);
                     }
                 };
@@ -67,17 +67,17 @@ var offline = {
     },
     saveState: function (state) {
         if (!db) {
-            console.log("ClaimantDB: DB hasn't opened yet, we'll just ignore this for now.");
+            console.log("garageDB: DB hasn't opened yet, we'll just ignore this for now.");
             return;
         }
         var transaction = db.transaction('offline-cache', 'readwrite');
         var objectStore = transaction.objectStore('offline-cache');
         var request = objectStore.put(state, storekey);
         request.onerror = function(event) {
-            console.log('ClaimantDB: error writing to database, ' + request.error.name);
+            console.log('garageDB: error writing to database, ' + request.error.name);
         };
         request.onsuccess = function(event) {
-            console.log("ClaimantDB: Successful DB write");
+            console.log("garageDB: Successful DB write");
         };
     }
 };

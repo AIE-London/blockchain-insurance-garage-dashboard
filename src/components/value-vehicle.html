@@ -1,0 +1,93 @@
+<link rel="import" href="../store/redux-store.html">
+<link rel="import" href="../shared-styles.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="../behaviors/garage-api-behavior.html">
+
+<dom-module id="value-vehicle">
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block;
+
+                padding: 10px;
+            }
+        </style>
+
+        <paper-card id="value-vehicles" >
+            <div class="card-content">
+
+                <h2>Vehicle  Evaluation        </h2>
+                <paper-input label="Estimated Value (£)" value = "{{value}}"> </paper-input>
+                <paper-textarea label="Notes" value = "{{notes}}"></paper-textarea>
+
+
+                <paper-dropdown-menu label="Write Off?">
+                    <paper-listbox id = "listBox" class="dropdown-content" selected = "{{type}}">
+                        <template is="dom-repeat" items="{{writeOffOptions}}">
+                            <paper-item>{{item}}</paper-item>
+                        </template>
+
+                    </paper-listbox>
+                </paper-dropdown-menu>
+
+
+
+            </div>
+            <div class="card-actions">
+                <paper-button dialog-dismiss>Cancel</paper-button>
+                <paper-button on-tap="_valueVehicle" autofocus>Submit</paper-button>
+            </div>
+        </paper-card>
+
+    </template>
+
+    <script>
+        /* global ReduxBehavior */
+        Polymer({
+            is: 'value-vehicle',
+            behaviors: [ReduxBehavior, GarageAPIBehavior],
+            properties: {
+                transactions: {
+                    type: Array,
+                    statePath: 'transactions',
+                },
+                token: {
+                    type: String,
+                    statePath: 'token',
+                },
+                writeOffOptions: {
+                    type: Array,
+                    value: ['Yes',
+                        'No']
+                },
+                username: {
+                    type: String,
+                    statePath: 'username',
+                },
+                claimId: {
+                    type: String,
+
+                }
+            },
+
+            ready: function () {
+
+            },
+
+
+            _valueVehicle: function() {
+                this._garageApi().submitReport(this.token,this.claimId,this.notes, this.type === this.writeOffOptions.indexOf("Yes"), this.value, this.username).then(function (token) {
+                    console.log(token);
+                }, function (error) {
+                    console.error(error);
+                });
+            }
+        });
+    </script>
+</dom-module>

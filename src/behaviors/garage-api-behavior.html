@@ -1,0 +1,146 @@
+<script>
+    var GarageAPIBehavior = {
+        properties: {
+            _endpoint: {
+                value: 'https://blockchain-insurance.eu-gb.mybluemix.net',
+            },
+            _mockEndpoint: {
+                value: 'https://aston-wiremock.eu-gb.mybluemix.net',
+            },
+        },
+        _garageApi: function (){
+            let _endpoint = this._endpoint;
+            let _mockEndpoint = this._mockEndpoint;
+            return {
+                submitReport: function (token, claimId, notes, writeOff, estimatedCost, username) {
+                    let headers = new Headers();
+                    headers.append("authorization", "bearer " + token);
+                    headers.append("Content-Type", "application/json");
+                    var writeMeOff = writeOff ? true : undefined;
+                    return fetch(_endpoint + '/garage/'+username+'/report',{
+                        method: 'POST',
+                        headers: headers,
+                        body: JSON.stringify({
+                            claimId: "C3",
+                            estimatedCost: parseFloat(estimatedCost),
+                            notes: notes,
+                            writeOff: writeMeOff
+                        })
+                    }).then(function(response) {
+                        console.log(response);
+                        if (response.status && response.status !== 200) {
+                            throw new Error("Failed to login");
+                        }
+                        return response.headers.get('Token');
+                    });
+                },
+
+                login: function (username, password) {
+                    let headers = new Headers();
+                    headers.append("Content-Type", "application/json");
+                    return fetch(_endpoint + '/auth',{
+                        method: 'POST',
+                        headers: headers,
+                        body: JSON.stringify({
+                            username: username,
+                            password: password
+                        })
+                    }).then(function(response) {
+                        console.log(response);
+                        if (response.status && response.status !== 200) {
+                            throw new Error("Failed to login");
+                        }
+                        return response.headers.get('Token');
+                    });
+                },
+                getClaim: function (claimId,token) {
+                    let headers = new Headers();
+                    headers.append("Content-Type", "application/json");
+                    headers.append("authorization", "bearer " + token);
+                    return fetch(_mockEndpoint + '/claim/'+ claimId,{
+                        method: 'GET',
+                        headers: headers,
+                    }).then(function (response) {
+                        console.log(response);
+                        return response.json();
+                    }).then(function(json){
+                        console.log(json);
+                        return json;
+                    });
+                },
+
+
+                getAllPolicies: function (username,token) {
+                    let headers = new Headers();
+                    headers.append("Content-Type", "application/json");
+                    headers.append("authorization", "bearer " + token);
+                    return fetch(_endpoint + '/caller/'+ username + '/history/policies/all',{
+
+                        method: 'GET',
+                        headers: headers,
+                    }).then(function (response) {
+                        console.log(response);
+                        return response.json();
+                    }).then(function(json){
+                        console.log(json);
+                        return json;
+                    });
+                },
+
+                approvedPayment: function (claimId,token,username,agreement) {
+                    let headers = new Headers();
+                    headers.append("Content-Type", "application/json");
+                    headers.append("authorization", "bearer " + token);
+                    return fetch(_endpoint + "/claimant/" + username + "/claim/" + claimId + "/payout/agreement", {
+                        method: 'GET',
+                        headers: headers,
+                        body: JSON.stringify({
+                            "agreement": agreement
+                        })
+
+                    }).then(function (response) {
+                        console.log(response);
+                        return response.json();
+                    }).then(function (json) {
+                        console.log(json);
+                        return json;
+                    });
+                },
+                getClaims: function (username, token) {
+                    let headers = new Headers();
+                    headers.append("Content-Type", "application/json");
+                    headers.append("authorization", "bearer " + token);
+                    return fetch(_endpoint + '/caller/' + username + '/history/claims/all',{
+
+                        method: 'GET',
+                        headers: headers,
+                    }).then(function (response) {
+                        console.log(response);
+                        return response.json();
+                    }).then(function(json){
+                        console.log(json);
+                        return json;
+                    });
+
+                },
+                createClaim: function (token,relatedPolicy, description, date, type, username) {
+                    let headers = new Headers();
+                    headers.append("authorization", "bearer " + token);
+                    headers.append("Content-Type", "application/json");
+                    return fetch(_endpoint + '/claimant/' + username + '/claim',{
+                        method: 'POST',
+                        headers: headers,
+                        body: JSON.stringify({
+                            relatedPolicy: relatedPolicy,
+                            description: description,
+                            incidentDate: date,
+                            type: type
+                        })
+                    }).then(function (response) {
+                        return response.headers.get('Token');
+                    });
+                }
+            }
+        }
+    }
+</script>
