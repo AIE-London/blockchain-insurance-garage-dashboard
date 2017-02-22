@@ -12,17 +12,19 @@
             let _endpoint = this._endpoint;
             let _mockEndpoint = this._mockEndpoint;
             return {
-                submitReport: function (token, notes, writeOff, estimatedValue, claimID, username) {
+                submitReport: function (token, claimId, notes, writeOff, estimatedCost, username) {
                     let headers = new Headers();
+                    headers.append("authorization", "bearer " + token);
                     headers.append("Content-Type", "application/json");
+                    var writeMeOff = writeOff ? true : undefined;
                     return fetch(_endpoint + '/garage/'+username+'/report',{
                         method: 'POST',
                         headers: headers,
                         body: JSON.stringify({
                             claimId: "C3",
-                            estimatedCost: estimatedValue,
+                            estimatedCost: parseFloat(estimatedCost),
                             notes: notes,
-                            writeOff: writeOff
+                            writeOff: writeMeOff
                         })
                     }).then(function(response) {
                         console.log(response);

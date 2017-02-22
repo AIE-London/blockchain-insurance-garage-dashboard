@@ -11,7 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="./store/redux-store.html">
 <link rel="import" href="./shared-styles.html">
 <link rel="import" href="./components/transaction-history.html">
-<link rel="import" href="./behaviors/claimant-api-behavior.html">
+<link rel="import" href="./behaviors/garage-api-behavior.html">
 <link rel="import" href="../bower_components/paper-progress/paper-progress.html">
 
 <dom-module id="my-view2">
@@ -30,7 +30,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
     <paper-progress indeterminate disabled="[[!isLoading]]"></paper-progress>
     <main>
-      <h1 class="claim_created">My Claims</h1>
+      <h1>Welcome, here you are able to value Vehicles</h1>
       <transaction-history></transaction-history>
     </main>
   </template>
@@ -41,7 +41,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     /* global ReduxBehavior */
     Polymer({
       is: 'my-view2',
-      behaviors: [ReduxBehavior, ClaimantAPIBehavior],
+      behaviors: [ReduxBehavior, GarageAPIBehavior],
       actions: {
         setClaimData: function(claimData) {
           return {
@@ -66,7 +66,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       fetchClaims: function () {
         var _this = this;
-        this._claimantApi().getClaims(this.username, this.token).then(function (body) {
+        this._garageApi().getClaims(this.username, this.token).then(function (body) {
           _this.dispatch('setClaimData', body.results);
           _this.isLoading = false;
         });
