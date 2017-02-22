@@ -12,7 +12,7 @@
             let _endpoint = this._endpoint;
             let _mockEndpoint = this._mockEndpoint;
             return {
-                submitReport: function (token, notes, wrightOff, estimatedValue, claimID, username) {
+                submitReport: function (token, notes, writeOff, estimatedValue, claimID, username) {
                     let headers = new Headers();
                     headers.append("Content-Type", "application/json");
                     return fetch(_endpoint + '/garage/'+username+'/report',{

@@ -7,7 +7,7 @@
 <link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
-<link rel="import" href="../behaviors/claim-api-behavior.html">
+<link rel="import" href="../behaviors/garage-api-behavior.html">
 
 <dom-module id="value-vehicle">
     <template>
@@ -51,7 +51,7 @@
         /* global ReduxBehavior */
         Polymer({
             is: 'value-vehicle',
-            behaviors: [ReduxBehavior, ClaimAPIBehavior],
+            behaviors: [ReduxBehavior, GarageAPIBehavior],
             properties: {
                 transactions: {
                     type: Array,
@@ -82,7 +82,7 @@
 
 
             _valueVehicle: function() {
-                this._claim().submitReport(this.token,this.claimId,this.notes, this.type === this.writeOffOptions.indexOf("Yes"), this.value, this.username).then(function (token) {
+                this._garageApi().submitReport(this.token,this.claimId,this.notes, this.type === this.writeOffOptions.indexOf("Yes"), this.value, this.username).then(function (token) {
                     console.log(token);
                 }, function (error) {
                     console.error(error);

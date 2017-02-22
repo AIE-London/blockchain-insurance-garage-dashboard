@@ -70,7 +70,7 @@
             },
             ready: function () {
                 var _this = this;
-                this._claimantApi().getClaim(this.claimId, this.token).then(function (claimValue) {
+                this._garageApi().getClaim(this.claimId, this.token).then(function (claimValue) {
                    _this.dispatch('addClaim', _this.claimId, claimValue);
                 });
 
