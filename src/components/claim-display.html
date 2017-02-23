@@ -52,14 +52,16 @@
                 }
             },
             _claimIdChanged: function () {
-                console.log("Hello");
+
                 this._claim = this.getState().claims[this.claimId];
+
                 this._policy = this.getState().policies[0];
-                console.log("Hello");
+
                 console.log(this.getState().policies);
                 console.log(this._claim);
             },
             ready: function () {
+
             }
         });
     </script>
