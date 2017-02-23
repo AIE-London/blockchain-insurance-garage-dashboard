@@ -13,7 +13,7 @@
             let _endpoint = this._endpoint;
             let _mockEndpoint = this._mockEndpoint;
             return {
-                submitReport: function (token, claimId, notes, writeOff, estimatedCost, username) {
+                submitReport: function (token, claimId, notes, writeOff, estimatedCost, username, vehicleRegistration) {
                     let headers = new Headers();
                     headers.append("authorization", "bearer " + token);
                     headers.append("Content-Type", "application/json");
@@ -22,10 +22,11 @@
                         method: 'POST',
                         headers: headers,
                         body: JSON.stringify({
-                            claimId: "C3",
+                            claimId: claimId,
                             estimatedCost: parseFloat(estimatedCost),
                             notes: notes,
-                            writeOff: writeMeOff
+                            writeOff: writeMeOff,
+                            vehicleRegistration: vehicleRegistration
                         })
                     }).then(function(response) {
                         console.log(response);
