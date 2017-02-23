@@ -22,7 +22,7 @@
                 <div><strong>Related Policy:</strong> [[_claim.relations.relatedPolicy]]</div>
                 <div><strong>Incident Date:</strong> [[_claim.details.incident.date]]</div>
                 <div><strong>Incident Type:</strong> [[_claim.details.incident.type]]</div>
-                <status-bar current-stage="[[_claim.details.status]]"></status-bar>
+
 
             </div>
 
@@ -45,10 +45,18 @@
                 _claim: {
                     type: Object,
                     value: {}
+                },
+                _policy: {
+                    type: Object,
+                    value: {}
                 }
             },
             _claimIdChanged: function () {
+                console.log("Hello");
                 this._claim = this.getState().claims[this.claimId];
+                this._policy = this.getState().policies[0];
+                console.log("Hello");
+                console.log(this.getState().policies);
                 console.log(this._claim);
             },
             ready: function () {

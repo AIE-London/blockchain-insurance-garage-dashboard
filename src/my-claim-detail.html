@@ -11,12 +11,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="./store/redux-store.html">
 <link rel="import" href="./shared-styles.html">
 <link rel="import" href="./components/claim-display.html">
-
+<link rel="import" href="./components/value-vehicle.html">
 <dom-module id="my-claim-detail">
     <template>
         <style include="shared-styles">
             :host {
-                display: block;
+                display: flex;
 
                 padding: 10px;
             }
@@ -27,8 +27,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 pattern="/claim-detail/:claimId"
                 data="{{_routeData}}"
                 tail="{{subroute}}"></app-route>
-        <h1 class="claim_created">Claim #[[_routeData.claimId]]</h1>
+        
+        <value-vehicle></value-vehicle>
         <claim-display claim-id="[[_routeData.claimId]]"></claim-display>
+
+
     </template>
 
 
