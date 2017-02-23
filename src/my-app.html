@@ -22,6 +22,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/polymerfire/polymerfire.html">
 <link rel="import" href="./store/redux-store.html">
+<link rel="import" href="./behaviors/garage-api-behavior.html>
 <!--
 <link rel="import" href="../bower_components/socket-io/socket-io.html">
 -->
@@ -85,7 +86,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <template is="dom-if" if="[[_status]]">
             <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
               <a name="view1" href="/">Home Page</a>
-              <a name="view3" href="/view3">Vehicle Evaluation</a>
               <hr />
               <paper-button on-tap="_logOut">Log Out</paper-button>
             </iron-selector>
@@ -103,7 +103,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <app-header condenses reveals effects="waterfall">
           <app-toolbar>
             <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
-            <div main-title>Your Evaluations</div>
+            <div main-title>Vehicle Evaluations</div>
           </app-toolbar>
         </app-header>
 
@@ -165,6 +165,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           };
         },
       },
+        setPolicies: function(policies) {
+            return {
+                type: 'SET_POLICIES',
+                policies:policies,
+            };
+        },
+
       _logOut: function () {
         this.$.pages.selectIndex(0);
         this.dispatch('logOut');
@@ -174,6 +181,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       ready: function (){
         var _this = this;
+
         offline.restore(function (initialState){
           _this.dispatch('restore', initialState);
         });
@@ -199,7 +207,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.$.drawer.close();
         }
       },
+      _getPolicies: function(){
+          this._garageApi().getAllPolicies(this.username,this.token).then(function (policies) {
+              _this.dispatch('setPolicies', policies.results);
+          }, function (error) {
+              console.error(error);
+          });
 
+      },
       _pageChanged: function(page) {
         // Load page import on demand. Show 404 page if fails
         var resolvedPageUrl = this.resolveUrl('my-' + page + '.html');
