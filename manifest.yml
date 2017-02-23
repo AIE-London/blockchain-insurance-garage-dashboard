@@ -1,6 +1,6 @@
 ---
 applications:
-- name:      blockchain-insurance-claimant-dashboard
-  host:      blockchain-insurance-claimant-dashboard
+- name:      blockchain-insurance-garage-dashboard
+  host:      blockchain-insurance-garage-dashboard
   memory:    64M
   buildpack: https://github.com/daniel-cotton/polymer-buildpack.git
