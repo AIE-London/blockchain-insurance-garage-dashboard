@@ -1,5 +1,6 @@
 <script>
     var GarageAPIBehavior = {
+
         properties: {
             _endpoint: {
                 value: 'https://blockchain-insurance.eu-gb.mybluemix.net',
@@ -111,7 +112,6 @@
                     headers.append("Content-Type", "application/json");
                     headers.append("authorization", "bearer " + token);
                     return fetch(_endpoint + '/caller/' + username + '/history/claims/all',{
-
                         method: 'GET',
                         headers: headers,
                     }).then(function (response) {
