@@ -28,7 +28,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 data="{{_routeData}}"
                 tail="{{subroute}}"></app-route>
         
-        <value-vehicle></value-vehicle>
+        <value-vehicle>on-submit="_handleSubmit"</value-vehicle>
         <claim-display claim-id="[[_routeData.claimId]]"></claim-display>
 
 
@@ -43,6 +43,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             behaviors: [ReduxBehavior],
             properties: {
             },
+            _handleSubmit: function () {
+                this.fire('submit', {});
+            }
         });
     </script>
 </dom-module>
