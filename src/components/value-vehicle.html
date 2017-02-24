@@ -25,7 +25,7 @@
                 <h2>Vehicle  Evaluation        </h2>
                 <paper-input label="Estimated Value (£)" value = "{{value}}"> </paper-input>
                 <paper-textarea label="Notes" value = "{{notes}}"></paper-textarea>
-                <paper-input label="Vehicle Registration" value = "{{vehicleRegistration}}"> </paper-input>
+                <paper-input label="Vehicle Registration"> </paper-input>
 
                 <paper-dropdown-menu label="Write Off?">
                     <paper-listbox id = "listBox" class="dropdown-content" selected = "{{type}}">
@@ -91,7 +91,7 @@
 
             _valueVehicle: function() {
                 var that = this;
-                this._garageApi().submitReport(this.token,this.claimId,this.notes, this.type === this.writeOffOptions.indexOf("Yes"), this.value, this.username,this.vehicleRegistration).then(function (token) {
+                this._garageApi().submitReport(this.token,this.claimId,this.notes, this.type === this.writeOffOptions.indexOf("Yes"), this.value, this.username).then(function (token) {
 
                     that.fire('submit', {});
                 }, function (error) {

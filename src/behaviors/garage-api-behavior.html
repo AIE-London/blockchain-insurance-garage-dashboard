@@ -18,7 +18,7 @@
             let _endpoint = this._endpoint;
             let _mockEndpoint = this._mockEndpoint;
             return {
-                submitReport: function (token, claimId, notes, writeOff, estimatedCost, username, vehicleRegistration) {
+                submitReport: function (token, claimId, notes, writeOff, estimatedCost, username) {
                     let headers = new Headers();
                     headers.append("authorization", "bearer " + token);
                     headers.append("Content-Type", "application/json");
@@ -30,8 +30,8 @@
                             claimId: claimId,
                             estimatedCost: parseFloat(estimatedCost),
                             notes: notes,
-                            writeOff: writeMeOff,
-                            vehicleRegistration: vehicleRegistration
+                            writeOff: writeMeOff
+
                         })
                     }).then(function(response) {
                         console.log(response);
