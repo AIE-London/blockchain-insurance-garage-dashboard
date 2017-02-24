@@ -62,7 +62,7 @@
                     return fetch(_mockEndpoint + '/claim/'+ claimId,{
                         method: 'GET',
                         headers: headers,
-                    }).t`hen(function (response) {
+                    }).then(function (response) {
                         console.log(response);
                         return response.json();
                     }).then(function(json){
