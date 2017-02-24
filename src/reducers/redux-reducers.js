@@ -68,6 +68,13 @@ var reducers = function (state, action) {
             initialState );
             break;
 
+        case 'SET_CURRENT_CLAIM_ID':
+
+            newState = Object.assign({}, state, {
+                currentClaimId: action.claimId
+            });
+            break;
+
         default:
             newState = state;
             break;

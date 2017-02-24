@@ -39,8 +39,8 @@
             properties: {
                 claimId: {
                     type: String,
-                    required: true,
-                    observer: '_claimIdChanged'
+                    observer: '_claimIdChanged',
+                    statePath: 'currentClaimId'
                 },
                 _claim: {
                     type: Object,

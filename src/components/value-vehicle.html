@@ -76,7 +76,7 @@
                 },
                 claimId: {
                     type: String,
-
+                    statePath: 'currentClaimId',
                 },
                 vehicleRegistration: {
                     type: String,
@@ -92,7 +92,6 @@
             _valueVehicle: function() {
                 var that = this;
                 this._garageApi().submitReport(this.token,this.claimId,this.notes, this.type === this.writeOffOptions.indexOf("Yes"), this.value, this.username).then(function (token) {
-
                     that.fire('submit', {});
                 }, function (error) {
                     console.error(error);

@@ -29,7 +29,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 tail="{{subroute}}"></app-route>
         
         <value-vehicle>on-submit="_handleSubmit"</value-vehicle>
-        <claim-display claim-id="[[_routeData.claimId]]"></claim-display>
+        <claim-display></claim-display>
 
 
     </template>
@@ -41,11 +41,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         Polymer({
             is: 'my-claim-detail',
             behaviors: [ReduxBehavior],
+            actions: {
+                addCurrentClaimId: function(claimId) {
+                    return {
+                        type: 'SET_CURRENT_CLAIM_ID',
+                        claimId: claimId,
+                    };
+                },
+            },
             properties: {
             },
             _handleSubmit: function () {
                 this.fire('submit', {});
+            },
+            ready: function () {
+                this.dispatch('addCurrentClaimId', this._routeData.claimId);
             }
+
         });
     </script>
 </dom-module>
