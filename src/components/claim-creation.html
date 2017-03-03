@@ -55,6 +55,7 @@
             </div>
             <div class="card-actions">
                 <paper-button on-tap="_createClaim" autofocus>Submit</paper-button>
+                <paper-toast id="toast"  horizontal-align="right" text="Thank you for submitting your claim"></paper-toast>
             </div>
         </paper-card>
 
@@ -109,11 +110,16 @@
             },
             _createClaim: function() {
                 var that = this;
-                this._claimantApi().createClaim(this.token,this._getIdForPolicy(this.policy),this.description, this._processDate(this.date), this.typeOptions[this.type], this.username).then(function () {
+                this._claimantApi().createClaim(this.token,this._getIdForPolicy(this.policy),this.description, this._processDate(this.date),
+                    this.typeOptions[this.type], this.username).then(function () {
+                    that.openToast();
                     that.fire('submit', {});
                 }, function (error) {
                     console.error(error);
                 });
+            },
+                openToast: function() {
+                    this.$.toast.open();
             },
             _getIdForPolicy: function(index) {
                 return this.availablePolicies[index].id
